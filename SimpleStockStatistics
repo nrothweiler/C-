@@ -1,0 +1,56 @@
+#include "StockList.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
+using namespace std;
+
+int main()
+{
+
+    string name;
+    string symbol;
+    double price;
+    double sum;
+    StockList stock;
+
+    string filename;
+    cout << "Please Enter A Filename: ";
+    cin >> filename;
+
+    ifstream reader(filename);
+
+    if (!reader.is_open())
+    {
+        cout << "Can't Open File." << endl;
+    }
+
+    string line;
+
+    //checks if end of file
+    while (!reader.eof())
+    {
+        line.clear();
+
+        getline(reader, line);
+        stringstream ss(line);
+        line ="";
+        ss << line;
+
+        ss >> name;
+        ss >> symbol;
+        ss >> price;
+
+        Stock s(name, symbol, price);
+        stock.AddStock(s);
+    }
+
+    sum = stock.CalcAveragePrice();
+
+    stock.PrintStock();
+
+    cout << "The Average Price Is: " << sum << endl;
+
+    reader.close();
+}
